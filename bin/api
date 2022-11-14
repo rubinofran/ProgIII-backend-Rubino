@@ -1,0 +1,33 @@
+#! /usr/bin/env node
+
+/* eslint-disable global-require */
+function start() {
+  const figlet = require('figlet')
+  const pkg = require('../package')
+
+  process.stdout.write('\n')
+  process.stdout.write(`${figlet.textSync(`API`, { font: 'Ogre' })}\n`)
+  process.stdout.write('\n')
+  process.stdout.write(
+    `Versión: ${pkg.version}, Ambiente: ${process.env.NODE_ENV || 'default'}\n`,
+  )
+  process.stdout.write('\n')
+  process.stdout.write('\n')
+
+  const program = require('..')
+
+  program
+    .start()
+    .then((result) => {
+      program.logger.info(`Api server`)
+      program.logger.info(`Ambiente ${process.env.NODE_ENV || 'default'}`)
+      if (result && result.url) {
+        program.logger.info(`Esperando solicitudes HTTP desde ${result.url}`)
+      }
+    })
+    .catch((err) => {
+      program.logger.error(`Error al iniciar Api server`, err)
+    })
+}
+
+start()

@@ -1,14 +1,18 @@
 {
   "name": "progiii-backend-rubino",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "lib": "lib"
-  },
+  "private": "true",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "./bin/api",
+    "dev": "nodemon ./bin/api",
+    "format": "prettier --write '**/*.{js,json,md}'",
+    "lint": "eslint . --ext .js",
+    "nomad": "nomad"
   },
+  "pre-commit": [
+    "format",
+    "lint"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rubinofran/ProgIII-backend-Rubino.git"
