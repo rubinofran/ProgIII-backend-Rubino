@@ -29,15 +29,15 @@ module.exports = function nomadRunner(nomad) {
     },
 
     insertMigration(migration, cb) {
-      this.db.collection('migrations').insertOne(migration, cb)
+      this.db.collection('usuarioPruebas').insertOne(migration, cb) /* en collection migrations */
     },
 
     getMigrations(cb) {
-      this.db.collection('migrations').find().toArray(cb)
+      this.db.collection('usuarioPruebas').find().toArray(cb)
     },
 
     updateMigration(filename, migration, cb) {
-      this.db.collection('migrations').updateOne(
+      this.db.collection('usuarioPruebas').updateOne(
         {
           filename,
         },
@@ -49,7 +49,7 @@ module.exports = function nomadRunner(nomad) {
     },
 
     removeMigration(filename, migration, cb) {
-      this.db.collection('migrations').updateOne(
+      this.db.collection('usuarioPruebas').updateOne(
         {
           filename,
         },

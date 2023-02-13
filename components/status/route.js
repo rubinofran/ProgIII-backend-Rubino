@@ -9,7 +9,7 @@ router.get('/status', getStatus)
 function getRoot(req, res) {
   req.logger.verbose('Respondiento a la solicitud de root')
   req.logger.verbose('Enviando respuesta al cliente')
-
+  
   /* eslint-disable no-undef */
   res.send({
     name: pkg.name,
