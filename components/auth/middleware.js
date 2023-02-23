@@ -17,7 +17,7 @@ function getToken(req, next) {
 
 function authenticationMiddleware(req, res, next) {
   if (!req.headers.authorization) {
-    req.logger.warn('Missing authorization header')
+    req.logger.warn('Falta encabezado de autorización')
     return next(new createError.Unauthorized())
   }
 
@@ -32,23 +32,23 @@ function authenticationMiddleware(req, res, next) {
 
     if (
       !req.user ||
-      !req.user._id ||
+      !req.user._id /* ||
       !req.user.organization ||
       !req.user.role ||
-      !req.user.permissions
+      !req.user.permissions */
     ) {
-      req.logger.error('Error authenticating malformed JWT')
+      req.logger.error('Error al autenticar')
       return next(new createError.Unauthorized())
     }
 
-    req.logger.verbose(`User ${req.user._id} authenticated`)
+    req.logger.verbose(`Usuario ${req.user._id} autenticado`)
   } catch (err) {
     if (err.message === 'invalid algorithm' || err.message === 'invalid signature') {
       const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
-      req.logger.error(`Suspicious access attempt from ip=${ip} ${token}`)
+      req.logger.error(`Intento de acceso sospechoso desde la ip=${ip} ${token}`)
     }
     if (err.name === 'TokenExpiredError') {
-      req.logger.warn('Expired token, sending 401 to client')
+      req.logger.warn('El token expiró, enviando 401 al cliente')
       return res.sendStatus(401)
     }
     return next(new createError.Unauthorized(err))
@@ -57,11 +57,11 @@ function authenticationMiddleware(req, res, next) {
 
 function authorizationMiddleware(req, res, next) {
   req.hasPermission = function hasPermission(permissionId) {
-    if (!req.user || !req.user.role) {
+    if (!req.user/*  || !req.user.role */) {
       return false
     }
 
-    if (req.user.role === 'admin') {
+/*     if (req.user.role === 'admin') {
       return true
     }
 
@@ -71,12 +71,12 @@ function authorizationMiddleware(req, res, next) {
 
     if (!req.user.permissions.find((id) => id === permissionId)) {
       return false
-    }
+    } */
 
     return true
   }
 
-  req.isAdmin = function isAdmin() {
+/*   req.isAdmin = function isAdmin() {
     return req.user && req.user.role === 'admin'
   }
 
@@ -99,7 +99,7 @@ function authorizationMiddleware(req, res, next) {
   req.isScoresManager = function isScoresManager() {
     return req.user && req.user.role === 'scores-manager'
   }
-
+ */
   req.isAuthenticated = function isAuthenticated() {
     return !!req.user
   }

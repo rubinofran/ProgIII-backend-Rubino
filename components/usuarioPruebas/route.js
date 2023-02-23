@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const bcrypt = require('bcrypt')
+const createToken = require('../../utils/create-token')
 
 const router = new Router()
 
@@ -8,6 +9,10 @@ router.get('/:id', getUsuarioPruebasById)
 router.post('/', createUsuarioPruebas)
 router.put('/:id', updateUsuarioPruebasById)
 router.delete('/:id', deleteUsuarioPruebasById)
+
+/* router.post('/login', createTokenDeUsuarioPruebas) */
+router.post('/login', validateUserAndCreateToken)
+
 
 async function getAllUsuariosPruebas(req, res, next) {
     try {
@@ -108,5 +113,71 @@ async function getAllUsuariosPruebas(req, res, next) {
       next(err)
     }
   }
+
+  async function validateUserAndCreateToken(req, res, next) {
+    console.log('validateUserAndCreateToken: ', req.body)
+    try {
+        const user = await req.model('UsuarioPruebas').findOne({ userName: req.body.userName })
+
+        const passwordCorrect = user == null
+            ? false
+            : await bcrypt.compare(req.body.password, user.password)
+        
+        if (!(user && passwordCorrect)) {
+            req.logger.verbose('Password o usuario inválidos. Enviando 401 al cliente')
+            res.status(401).json({
+                error: 'Password o usuario inválidos'
+            })
+            return res.status(401).end()
+        }
+        delete user.password
+
+        const response = await createToken(req, user)
+        res.status(201).send(response)
+
+    } catch (err) {
+        next(err)
+    }
+}
   
+/*   async function createTokenDeUsuarioPruebas(req, res, next) {
+
+    if (!req.body.userName) {
+      req.logger.verbose('Parámetro userName faltante. Enviando 400 al cliente')
+      return res.status(400).end()
+    }
+
+    req.logger.info(`Creando token de usuario para ${req.body.userName}`)
+      
+    if (!req.body.password) {
+      req.logger.info('Parámetro password faltante. Enviando 400 al cliente')
+      return res.status(400).end()
+    }
+
+    try {
+
+      const usuario = await req.model('UsuarioPruebas').findOne({ userName: req.body.userName }, '+password')
+
+      if (!usuario) {
+        req.logger.verbose('Usuario no encontrado. Enviando 404 al cliente')
+        return res.status(401).end()
+      }
+      
+      req.logger.verbose('Revisando el password de usuario')
+      const result = await usuario.checkPassword(req.body.password)
+  
+      delete usuario.password
+  
+      if (!result.isOk) {
+        req.logger.verbose('Password inválido. Enviando 401 al cliente')
+        return res.status(401).end()
+      }
+      
+      const response = await generarToken(req, usuario)
+      res.status(201).send(response)
+    } catch (err) {
+      next(err)
+    }
+  }
+ */
   module.exports = router

@@ -5,8 +5,7 @@ const { MongoClient } = mongodb
 const { ObjectId } = mongodb
 
 // eslint-disable-next-line
-console.log(`Running migrations on DB ${config.mongo.db} for tenant ${config.tenant}\n`)
-// this.logger.verbose(`Ejecutando migraciones en la base de datos ${config.mongo.db} para el cliente ${config.tenant}\n`)
+console.log(`Ejecutando migraciones en la base de datos ${config.mongo.db}\n`)
 
 module.exports = function nomadRunner(nomad) {
   nomad.context.config = config
@@ -29,15 +28,15 @@ module.exports = function nomadRunner(nomad) {
     },
 
     insertMigration(migration, cb) {
-      this.db.collection('usuarioPruebas').insertOne(migration, cb) /* en collection migrations */
+      this.db.collection('migrations').insertOne(migration, cb)
     },
 
     getMigrations(cb) {
-      this.db.collection('usuarioPruebas').find().toArray(cb)
+      this.db.collection('migrations').find().toArray(cb)
     },
 
     updateMigration(filename, migration, cb) {
-      this.db.collection('usuarioPruebas').updateOne(
+      this.db.collection('migrations').updateOne(
         {
           filename,
         },
@@ -49,7 +48,7 @@ module.exports = function nomadRunner(nomad) {
     },
 
     removeMigration(filename, migration, cb) {
-      this.db.collection('usuarioPruebas').updateOne(
+      this.db.collection('migrations').updateOne(
         {
           filename,
         },

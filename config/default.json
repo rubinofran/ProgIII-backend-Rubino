@@ -9,11 +9,8 @@
 
   "auth": {
     "token": {
-      "issuer": "Api",
-      "algorithm": "RS256",
-      "appExpiresIn": "90d",
-      "dashboardExpiresIn": "1d",
-      "audience": ["app", "dashboard"]
+      "secret": "secret",
+      "expiresIn": "1d"
     },
     "key": "api-local",
     "passwordTtl": 94670856000,
