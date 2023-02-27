@@ -6,16 +6,20 @@ exports.isReversible = true;
 exports.isIgnored    = false;
 
 exports.up = (db, done) => {
+  
+  const date = new Date() 
+  migrationDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} Hora: ${date.getHours()}:${date.getMinutes() > 9 ? '' : '0'}${date.getMinutes()}`
+
   db.collection('users').insertOne(
     {
       _id: new ObjectId('000000000000000000000000'),
-      userName: 'admin@banco.com',
+      userName: 'admin1@banco.com',
       password: '$2b$10$B1/9vxD06YW6w5NABThSSOURXsUb3YFMFqcZsNxDtPZowu6eex3re', // 1Admin1234
-      name: 'Francisco Rubino',
+      name: 'Alan Schaefer',
       isActive: true, 
       role: new ObjectId('000000000000000000000000'),
-      createdAt: new Date(),
-      updatedAt: new Date(), 
+      createdAt: migrationDate,
+      updatedAt: migrationDate, 
       __v: 0,
     },
     done,

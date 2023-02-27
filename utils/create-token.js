@@ -12,18 +12,18 @@ async function createToken(req, user) {
 	
 	const userResponse = {
 		_id: user._id,
-		userName: user.userName,
-		clientType: user.clientType,
+		/* userName: user.userName,
+		clientType: user.clientType, */
 		name: user.name,
-		address: user.address,
+		/* address: user.address,
 		accountType: user.accountType, 
 		cbu: user.cbu,
 		alias: user.alias,
-		moneyInAccount: user.moneyInAccount,
+		moneyInAccount: user.moneyInAccount, */
 		isActive: user.isActive,
 		role: role.name,
-		createdAt: user.createdAt,
-		updatedAt: user.updatedAt,
+		/* createdAt: user.createdAt,
+		updatedAt: user.updatedAt, */
 	};
 
 	const privateKey = req.config.auth.token.secret

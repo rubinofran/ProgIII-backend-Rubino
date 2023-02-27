@@ -104,8 +104,15 @@ async function updateUserById(req, res, next) {
       res.status(404).send('Usuario no encontrado')
     }
 
-    /* ver si se debe modificar lo demás */
-    userToUpdate.isActive = user.isActive
+    /* console.log(Object.keys(user).length) */
+    if(Object.keys(user).length == 1) { // Alta, baja y modificación del dinero en la cuenta
+      /* console.log(Object.keys(user)[0]) */
+      const schemaField = Object.keys(user)[0]
+      userToUpdate[schemaField] = user[schemaField]
+    }
+		
+    const date = new Date() 
+    userToUpdate.updatedAt = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} Hora: ${date.getHours()}:${date.getMinutes() > 9 ? '' : '0'}${date.getMinutes()}`
     await userToUpdate.save()
 
     res.send(userToUpdate)

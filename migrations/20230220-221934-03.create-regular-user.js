@@ -6,13 +6,17 @@ exports.isReversible = true;
 exports.isIgnored    = false;
 
 exports.up = (db, done) => {
+  
+  const date = new Date() 
+  migrationDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} Hora: ${date.getHours()}:${date.getMinutes() > 9 ? '' : '0'}${date.getMinutes()}`
+
   db.collection('users').insertOne(
     {
       _id: new ObjectId('000000000000000000000001'),
       userName: 'user1@banco.com',
       password: '$2b$10$5TykcnyTSLZsaH/1dbTV4OoQjHtweVzf6vcpm48XhdQMkyFVkEgIC', // 1User1234
       clientType: 'Persona física',
-      name: 'Alan Schaefer',
+      name: 'George Dillon',
       address: 'Dirección1 111',
       accountType: 'Cuenta corriente', 
       cbu: 128643216080401,
@@ -20,8 +24,8 @@ exports.up = (db, done) => {
       moneyInAccount: 2000,
       isActive: true,
       role: new ObjectId('000000000000000000000001'),
-      createdAt: new Date(),
-      updatedAt: new Date(), 
+      createdAt: migrationDate,
+      updatedAt: migrationDate, 
       __v: 0,
     },
     done,

@@ -30,7 +30,7 @@ const userSchema = new Schema({
   accountType: {
     type: String,
   },
-  cbu: {
+  cbu: { /* quitar */
     type: Number,
     unique: true,
   },
@@ -50,12 +50,12 @@ const userSchema = new Schema({
     ref: 'Role', 
     required: true 
   },
-  createdAt: {
-    type: Date,
+  createdAt: { 
+    type: String,
     required: true, 
   },
   updatedAt: {
-    type: Date,
+    type: String,
     required: true, 
   }
 })

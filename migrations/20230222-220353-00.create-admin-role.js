@@ -7,12 +7,16 @@ exports.isIgnored    = false;
 
 
 exports.up = (db, done) => {
+
+  const date = new Date() 
+  migrationDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} Hora: ${date.getHours()}:${date.getMinutes() > 9 ? '' : '0'}${date.getMinutes()}`
+
   db.collection('roles').insertOne(
     {
       _id: new ObjectId('000000000000000000000000'),
       name: 'admin',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: migrationDate,
+      updatedAt: migrationDate,
     },
     done,
   )
