@@ -9,14 +9,10 @@ const roleSchema = new Schema({
     unique: true,
     lowercase: true, 
   },
-  createdAt: {
-    type: Date,
+  createdAt: { 
+    type: String,
     required: true, 
-  },
-  updatedAt: {
-    type: Date,
-    required: true, 
-  }
+  }, 
 })
 
 module.exports = roleSchema

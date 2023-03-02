@@ -30,10 +30,10 @@ const userSchema = new Schema({
   accountType: {
     type: String,
   },
-  cbu: { /* quitar */
+/*   cbu: { 
     type: Number,
     unique: true,
-  },
+  }, */
   alias: {
     type: String,
     unique: true,
@@ -57,17 +57,7 @@ const userSchema = new Schema({
   updatedAt: {
     type: String,
     required: true, 
-  }
+  },
 })
-
-/* userSchema.method('checkPassword', async function checkPassword(potentialPassword) {
-  if (!potentialPassword) {
-    return Promise.reject(new Error('Password is required'))
-  }
-
-  const isMatch = await bcrypt.compare(potentialPassword, this.password)
-
-  return { isOk: isMatch }
-}) */
 
 module.exports = userSchema

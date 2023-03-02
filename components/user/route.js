@@ -1,11 +1,14 @@
 const { Router } = require('express')
 const bcrypt = require('bcrypt')
 const createToken = require('../../utils/create-token')
+const createDate = require('../../utils/create-date')
+const createAlias = require('../../utils/create-alias')
 
 const router = new Router()
 
 router.get('/', getAllUsers)
 router.get('/:id', getUserById)
+router.get('/findBy/:alias', getUserByAlias)
 router.post('/', createUser)
 router.delete('/:id', deleteUserById)
 router.put('/:id', updateUserById)
@@ -41,6 +44,30 @@ async function getUserById(req, res, next) {
   }
 }
 
+async function getUserByAlias(req, res, next) {
+
+  if (!req.params.alias) {
+    res.status(404).send('Alias no encontrado')
+  }
+  console.log('getUserByAlias con alias: ', req.params.alias)
+
+  try {
+    let user = await req.model('User').findOne({ alias: req.params.alias })
+
+    if (!user) {
+      req.logger.error('Usuario no encontrado')
+      res.status(404).send('Usuario no encontrado')
+    }
+    
+    // Seguridad
+    const { _id, userName, name, moneyInAccount } = user
+     
+    res.send({ _id, userName, name, moneyInAccount })
+  } catch (err) {
+    next(err)
+  }
+}
+
 async function createUser(req, res, next) {
   console.log('createUser: ', req.body)
 
@@ -52,11 +79,19 @@ async function createUser(req, res, next) {
       req.logger.error('Rol no encontrado')
       res.status(404).send('Rol no encontrado')
     } 
+    const users = await req.model('User').find()
 
     const passEncrypted = await bcrypt.hash(user.password, 10)
     const userCreated = await req
       .model('User')
-      .create({ ...user, password: passEncrypted, role: role._id })
+      .create({ 
+        ...user, 
+        password: passEncrypted, 
+        role: role._id, 
+        alias: createAlias(users.filter(u => u.alias != undefined)), 
+        isActive: true, 
+        moneyInAccount: 0 
+      })
 
     res.send(`Usuario creado:  ${userCreated.userName}`)
   } catch (err) {
@@ -111,8 +146,7 @@ async function updateUserById(req, res, next) {
       userToUpdate[schemaField] = user[schemaField]
     }
 		
-    const date = new Date() 
-    userToUpdate.updatedAt = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} Hora: ${date.getHours()}:${date.getMinutes() > 9 ? '' : '0'}${date.getMinutes()}`
+    userToUpdate.updatedAt = createDate()
     await userToUpdate.save()
 
     res.send(userToUpdate)
@@ -137,6 +171,7 @@ async function validateUserAndCreateToken(req, res, next) {
           })
           return res.status(401).end()
       }
+      // Seguridad
       delete user.password
 
       const response = await createToken(req, user)

@@ -19,8 +19,4 @@ if (config.logger.console) {
 	logger.add(winston.transports.Console, config.logger.console);
 }
 
-// if (config.logger.sentry && config.logger.sentry.dsn) {
-//   logger.add(SentryTransport, config.logger.sentry)
-// }
-
 module.exports = logger;

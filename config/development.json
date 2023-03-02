@@ -3,17 +3,14 @@
   "program": "api",
 
   "server": {
-    "url": "",
+    "url": "http://localhost:4000",
     "maxResultsLimit": 1000
   },
 
   "auth": {
     "token": {
-      "issuer": "Api",
-      "algorithm": "RS256",
-      "appExpiresIn": "90d",
-      "dashboardExpiresIn": "1d",
-      "audience": ["app", "dashboard"]
+      "secret": "secret",
+      "expiresIn": "1d"
     },
     "key": "api-local",
     "passwordTtl": 94670856000,

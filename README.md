@@ -1,5 +1,5 @@
 # ProgIII-backend-Rubino
-Backend para proyecto final de programación III.
+Backend para el proyecto final de programación III.
 
 # Install modules
 npm i
@@ -12,3 +12,6 @@ npm run nomad create
 
 # How to run migration
 npm run nomad up
+
+# How to test API
+Import ProgIII.postman_collection.json and ProgIII.postman_enviroment.json

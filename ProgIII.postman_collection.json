@@ -15,12 +15,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/users",
-							"protocol": "http",
+							"raw": "{{prot}}://{{server}}:{{port}}/users",
+							"protocol": "{{prot}}",
 							"host": [
-								"localhost"
+								"{{server}}"
 							],
-							"port": "3000",
+							"port": "{{port}}",
 							"path": [
 								"users"
 							]
@@ -34,15 +34,36 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/users/000000000000000000000000",
-							"protocol": "http",
+							"raw": "{{prot}}://{{server}}:{{port}}/users/000000000000000000000001",
+							"protocol": "{{prot}}",
 							"host": [
-								"localhost"
+								"{{server}}"
 							],
-							"port": "3000",
+							"port": "{{port}}",
 							"path": [
 								"users",
-								"000000000000000000000000"
+								"000000000000000000000001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserByAlias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{prot}}://{{server}}:{{port}}/users/findBy/PISO.PIEDRA.GALERA",
+							"protocol": "{{prot}}",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users",
+								"findBy",
+								"PISO.PIEDRA.GALERA"
 							]
 						}
 					},
@@ -55,7 +76,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"user1\",\r\n    \"password\": \"1User1234\"\r\n}",
+							"raw": "{\r\n    \"isActive\": true   \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -63,15 +84,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/usuariosPruebas/63e9747cf70ec99adbe71b0a",
-							"protocol": "http",
+							"raw": "{{prot}}://{{server}}:{{port}}/users/000000000000000000000001",
+							"protocol": "{{prot}}",
 							"host": [
-								"localhost"
+								"{{server}}"
 							],
-							"port": "3000",
+							"port": "{{port}}",
 							"path": [
-								"usuariosPruebas",
-								"63e9747cf70ec99adbe71b0a"
+								"users",
+								"000000000000000000000001"
 							]
 						}
 					},
@@ -84,7 +105,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"user2@banco.com\",\r\n    \"password\": \"1Admin1234\",\r\n    \"clientType\": \"Persona física\",\r\n    \"name\": \"Homero Simpson\",\r\n    \"address\": \"Calle Falas 123\",\r\n    \"accountType\": \"Cuenta corriente\", \r\n    \"cbu\": 128643216080403,\r\n    \"alias\": \"TECHO.PIEDRA.GALERA\",\r\n    \"moneyInAccount\": 0,\r\n    \"isActive\": true,\r\n    \"role\": \"user\"\r\n}",
+							"raw": "{\r\n    \"userName\": \"user4@banco.com\",\r\n    \"password\": \"4User1234\",\r\n    \"clientType\": \"Persona física\",\r\n    \"name\": \"Homero Simpson\",\r\n    \"address\": \"Calle Falsa 123\",\r\n    \"accountType\": \"Cuenta corriente\",\r\n    \"role\": \"user\",\r\n    \"createdAt\": \"01/02/2023 Hora: 20:00\",\r\n    \"updatedAt\": \"01/02/2023 Hora: 20:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -92,12 +113,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/users",
-							"protocol": "http",
+							"raw": "{{prot}}://{{server}}:{{port}}/users",
+							"protocol": "{{prot}}",
 							"host": [
-								"localhost"
+								"{{server}}"
 							],
-							"port": "3000",
+							"port": "{{port}}",
 							"path": [
 								"users"
 							]
@@ -120,15 +141,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/users/63f6c50cd5284a8526b98df5",
-							"protocol": "http",
+							"raw": "{{prot}}://{{server}}:{{port}}/users/63fff9b6b34c7a20a25263da",
+							"protocol": "{{prot}}",
 							"host": [
-								"localhost"
+								"{{server}}"
 							],
-							"port": "3000",
+							"port": "{{port}}",
 							"path": [
 								"users",
-								"63f6c50cd5284a8526b98df5"
+								"63fff9b6b34c7a20a25263da"
 							]
 						}
 					},
@@ -142,12 +163,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/",
-					"protocol": "http",
+					"raw": "{{prot}}://{{server}}:{{port}}/",
+					"protocol": "{{prot}}",
 					"host": [
-						"localhost"
+						"{{server}}"
 					],
-					"port": "3000",
+					"port": "{{port}}",
 					"path": [
 						""
 					]
@@ -170,12 +191,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/users/login",
-					"protocol": "http",
+					"raw": "{{prot}}://{{server}}:{{port}}/users/login",
+					"protocol": "{{prot}}",
 					"host": [
-						"localhost"
+						"{{server}}"
 					],
-					"port": "3000",
+					"port": "{{port}}",
 					"path": [
 						"users",
 						"login"

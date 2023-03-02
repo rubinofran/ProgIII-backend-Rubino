@@ -1,4 +1,5 @@
 
+
 exports.name        = 'create-another-regular-user';
 exports.description = 'creates another regular user';
 
@@ -8,7 +9,7 @@ exports.isIgnored    = false;
 exports.up = (db, done) => {
 
   const date = new Date() 
-  migrationDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} Hora: ${date.getHours()}:${date.getMinutes() > 9 ? '' : '0'}${date.getMinutes()}`
+  const migrationDate = `${date.getDate() > 9 ? '' : '0'}${date.getDate()}/${date.getDate() > 8 ? '' : '0'}${date.getMonth() + 1}/${date.getFullYear()} Hora: ${date.getHours()}:${date.getMinutes() > 9 ? '' : '0'}${date.getMinutes()}`
 
   db.collection('users').insertOne(
     {
@@ -18,9 +19,8 @@ exports.up = (db, done) => {
       clientType: 'Persona física',
       name: 'Mac Eliot',
       address: 'Dirección2 222',
-      accountType: 'Cuenta corriente', 
-      cbu: 128643216080402,
-      alias: 'TECHO.PIEDRA.GALERA',
+      accountType: 'Cuenta corriente',
+      alias: 'PISO.GALERA.PIEDRA',
       moneyInAccount: 5000,
       isActive: false,
       role: new ObjectId('000000000000000000000001'),

@@ -8,7 +8,7 @@ exports.isIgnored    = false;
 exports.up = (db, done) => {
   
   const date = new Date() 
-  migrationDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} Hora: ${date.getHours()}:${date.getMinutes() > 9 ? '' : '0'}${date.getMinutes()}`
+  const migrationDate = `${date.getDate() > 9 ? '' : '0'}${date.getDate()}/${date.getDate() > 8 ? '' : '0'}${date.getMonth() + 1}/${date.getFullYear()} Hora: ${date.getHours()}:${date.getMinutes() > 9 ? '' : '0'}${date.getMinutes()}`
 
   db.collection('users').insertOne(
     {
@@ -18,8 +18,7 @@ exports.up = (db, done) => {
       clientType: 'Persona física',
       name: 'George Dillon',
       address: 'Dirección1 111',
-      accountType: 'Cuenta corriente', 
-      cbu: 128643216080401,
+      accountType: 'Cuenta corriente',
       alias: 'PISO.PIEDRA.GALERA',
       moneyInAccount: 2000,
       isActive: true,
