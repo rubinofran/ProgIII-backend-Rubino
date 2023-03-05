@@ -23,7 +23,7 @@ function authenticationMiddleware(req, res, next) {
     if (
       !req.user ||
       !req.user._id ||
-      !req.user.role /* || true */
+      !req.user.role /* || true // to test authentication */
     ) {
       req.logger.error('Error al autenticar')
       return next(new createError.Unauthorized())
@@ -46,35 +46,52 @@ function authenticationMiddleware(req, res, next) {
 
 function authorizationMiddleware(req, res, next) {
   
-/*   req.hasPermission = function hasPermission(permissionId) {
-    if (!req.user || !req.user.role) {
-      return false
-    }
+  req.logger.verbose('Método evaluado para la autorización: ', req.method)
+  req.logger.verbose('URL evaluada para la autorización: ', req.url)
+  const isUserRoute = req.url.includes('userRoute') 
+  const isTransactionRoute = req.url.includes('transactionRoute') 
 
-    if (req.user.role === 'admin') {
-      return true
-    }
+  if(!req.user) { 
+    req.logger.error('Error al autorizar, debe ser un usuario válido')
+    return next(new createError.Unauthorized())
+  }
+  console.log('---------------> Supera autorización de usuario')
 
-    if (!req.user.permissions || !req.user.permissions.length) {
-      return false
-    }
+  if(!req.user.role) { 
+    req.logger.error('Error al autorizar, el usuario debe tener un rol')
+    return next(new createError.Unauthorized())
+  }
+  console.log('---------------> Supera autorización de rol')
 
-    if (!req.user.permissions.find((id) => id === permissionId)) {
-      return false
-    }
+  if (req.user.role != 'admin' && req.user.role != 'user') {
+  // if(req.user.role != 'another') { // to test authoraization
+    req.logger.error('Error al autorizar, rol inválido')
+    return next(new createError.Unauthorized())
+  }
+  console.log('---------------> Supera autorización de tipo de rol')
+  
+  switch (req.method) {
 
-    return true
+    case 'DELETE':
+      if(req.user.role === 'user' && (isUserRoute || isTransactionRoute)) {
+        req.logger.error('Error al autorizar, rol inválido para eliminar usuarios o transacciones')
+        return next(new createError.Unauthorized())
+      }
+      break;
+    
+    // Waiting for update 
+    case 'GET':
+    case 'PUT':
+    case 'POST':
+    default:
+      console.log('---------------> Supera la autorización dentro del selector de método')
+      req.logger.verbose(`Usuario ${req.user._id} autorizado`)
+      return next()
   }
 
-  req.isAdmin = function isAdmin() {
-    return req.user && req.user.role === 'admin'
-  } */
-
-  req.isAuthenticated = function isAuthenticated() {
-    return !!req.user
-  }
-
-  return next(null)
+  console.log('---------------> Supera la autorización fuera del selector de método') 
+  req.logger.verbose(`Usuario ${req.user._id} autorizado`)
+  return next()
 }
 
 module.exports = {

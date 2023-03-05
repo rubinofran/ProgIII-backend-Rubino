@@ -17,9 +17,13 @@ npm run nomad up
 Import ProgIII.postman_collection.json and ProgIII.postman_enviroment.json
 
 # About
-Base de datos: MONGO DB 
-Ruteo: EXPRESS 
-Backend: NODE 
-Seguridad: JWT 
-Migraciones: NOMAD 
-Variables de entorno: DOT ENV 
+Base de datos: MONGO DB  
+Ruteo: EXPRESS  
+Backend: NODE  
+Seguridad: JWT  
+Migraciones: NOMAD  
+Variables de entorno: DOT ENV
+
+# About .env
+Se trata de una variable de entorno que en este caso es compartida  
+pero normalmente sería ignorada desde .gitignore

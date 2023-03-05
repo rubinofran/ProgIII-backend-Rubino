@@ -1,19 +1,17 @@
 const { Router } = require('express')
 const bcrypt = require('bcrypt')
-const createToken = require('../../utils/create-token')
 const createDate = require('../../utils/create-date')
 const createAlias = require('../../utils/create-alias')
-const { authentication/* , authorization */ } = require('../auth/middleware')
+const { authentication, authorization } = require('../auth/middleware')
 
 const router = new Router()
 
-router.get('/', getAllUsers)
-router.get('/:id', authentication, getUserById)
-router.get('/findBy/:alias', getUserByAlias)
+router.get('/userRoute/', authentication, authorization, getAllUsers)
+router.get('/userRoute/:id', authentication, authorization, getUserById)
+router.get('/userRoute/findBy/:alias', authentication, authorization, getUserByAlias)
 router.post('/', createUser)
-router.delete('/:id', deleteUserById)
-router.put('/:id', updateUserById)
-router.post('/login', validateUserAndCreateToken)
+router.delete('/userRoute/:id', authentication, authorization, deleteUserById) 
+router.put('/userRoute/:id', authentication, authorization, updateUserById)
 
 async function getAllUsers(req, res, next) {
   try {
@@ -27,15 +25,15 @@ async function getAllUsers(req, res, next) {
 async function getUserById(req, res, next) {
 
   if (!req.params.id) {
+    req.logger.error('Id no encontrado. Enviando 404 al cliente')
     res.status(404).send('Id no encontrado')
   }
   console.log('getUserById con id: ', req.params.id)
 
   try {
     const user = await req.model('User').findById(req.params.id).populate('role')
-
     if (!user) {
-      req.logger.error('Usuario no encontrado')
+      req.logger.error('Usuario no encontrado. Enviando 404 al cliente')
       res.status(404).send('Usuario no encontrado')
     }
 
@@ -48,22 +46,22 @@ async function getUserById(req, res, next) {
 async function getUserByAlias(req, res, next) {
 
   if (!req.params.alias) {
+    req.logger.error('Alias no encontrado. Enviando 404 al cliente')
     res.status(404).send('Alias no encontrado')
   }
   console.log('getUserByAlias con alias: ', req.params.alias)
 
   try {
     let user = await req.model('User').findOne({ alias: req.params.alias })
-
     if (!user) {
-      req.logger.error('Usuario no encontrado')
-      res.status(404).send('Usuario no encontrado')
+      req.logger.error(`Usuario con alias ${req.params.alias} no encontrado. Enviando 404 al cliente`)
+      res.status(404).send(`Usuario con alias ${req.params.alias} no encontrado`)
     }
     
     // Seguridad
-    const { _id, userName, name, moneyInAccount } = user
+    const { _id, userName, name, moneyInAccount, isActive } = user
      
-    res.send({ _id, userName, name, moneyInAccount })
+    res.send({ _id, userName, name, moneyInAccount, isActive })
   } catch (err) {
     next(err)
   }
@@ -72,14 +70,31 @@ async function getUserByAlias(req, res, next) {
 async function createUser(req, res, next) {
   console.log('createUser: ', req.body)
 
+  if (!req.body.role) {
+    req.logger.error('Rol no encontrado. Enviando 404 al cliente')
+    res.status(404).send('Rol no encontrado')
+  }
+
+  if (!req.body.userName) {
+    req.logger.error('Usuario no encontrado. Enviando 404 al cliente')
+    res.status(404).send('Usuario no encontrado')
+  }
+
   const user = req.body
 
   try {
     const role = await req.model('Role').findOne({ name: user.role })
     if (!role) {
-      req.logger.error('Rol no encontrado')
+      req.logger.error('Rol no encontrado. Enviando 404 al cliente')
       res.status(404).send('Rol no encontrado')
     } 
+
+    const userFound = await req.model('User').findOne({ userName: user.userName })
+    if (userFound) {
+      req.logger.verbose('Ya existe una cuenta con ese usuario. Enviando 409 al cliente')
+      res.status(409).send('Ya existe una cuenta con ese usuario')
+    }
+
     const users = await req.model('User').find()
 
     const passEncrypted = await bcrypt.hash(user.password, 10)
@@ -105,15 +120,15 @@ async function createUser(req, res, next) {
 async function deleteUserById(req, res, next) {
   
   if (!req.params.id) {
-    res.status(500).send('Id no encontrado')
+    req.logger.error('Id no encontrado. Enviando 404 al cliente')
+    res.status(404).send('Id no encontrado')
   }
   console.log('deleteUserById con id: ', req.params.id)
 
   try {
     const user = await req.model('User').findById(req.params.id)
-
     if (!user) {
-      req.logger.error('Usuario no encontrado')
+      req.logger.error('Usuario no encontrado. Enviando 404 al cliente')
       res.status(404).send('Usuario no encontrado')
     }
 
@@ -128,7 +143,8 @@ async function deleteUserById(req, res, next) {
 async function updateUserById(req, res, next) {
   
   if (!req.params.id) {
-    res.status(500).send('Id no encontrado')
+    req.logger.error('Id no encontrado. Enviando 404 al cliente')
+    res.status(404).send('Id no encontrado')
   }
   console.log('updateUserById con id: ', req.params.id)
 
@@ -136,9 +152,8 @@ async function updateUserById(req, res, next) {
 
   try {
     const userToUpdate = await req.model('User').findById(req.params.id)
-
     if (!userToUpdate) {
-      req.logger.error('Usuario no encontrado')
+      req.logger.error('Usuario no encontrado. Enviando 404 al cliente')
       res.status(404).send('Usuario no encontrado')
     }
 
@@ -153,38 +168,6 @@ async function updateUserById(req, res, next) {
     res.send(userToUpdate)
   } catch (err) {
     next(err)
-  }
-}
-
-async function validateUserAndCreateToken(req, res, next) {
-  console.log('validateUserAndCreateToken: ', req.body)
-
-  if (!req.body.userName) {
-    req.logger.verbose('Parámetro userName faltante. Enviando 400 al cliente')
-    res.status(400).send('Parámetro userName faltante')
-  }
-  
-  req.logger.info(`Intentando crear token de usuario para ${req.body.userName}`)
-
-  if (!req.body.password) {
-    req.logger.info('Parámetro password faltante. Enviando 400 al cliente')
-    res.status(400).send('Parámetro password faltante')
-  }
-
-  try {
-      const user = await req.model('User').findOne({ userName: req.body.userName })
-      const passwordCorrect = user == null
-          ? false
-          : await bcrypt.compare(req.body.password, user.password)
-
-      if (!(user && passwordCorrect)) {
-          req.logger.verbose('Usuario o contraseña inválidos. Enviando 401 al cliente')
-          res.status(401).send('Usuario o contraseña inválidos')
-      }
-      const response = await createToken(req, user)
-      res.status(201).send(response)
-  } catch (err) {
-      next(err)
   }
 }
 

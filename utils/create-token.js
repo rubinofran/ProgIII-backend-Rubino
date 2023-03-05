@@ -13,21 +13,12 @@ async function createToken(req, user) {
 	
 	const userResponse = {
 		_id: user._id,
-		/* userName: user.userName,
-		clientType: user.clientType, */
 		name: user.name,
-		/* address: user.address,
-		accountType: user.accountType, 
-		cbu: user.cbu,
-		alias: user.alias,
-		moneyInAccount: user.moneyInAccount, */
 		isActive: user.isActive,
 		role: role.name,
-		/* createdAt: user.createdAt,
-		updatedAt: user.updatedAt, */
 	};
 
-	const privateKey = process.env.SECRET_KEY/* req.config.auth.token.secret */
+	const privateKey = process.env.SECRET_KEY
 	
 	const token = jwt.sign(payload, privateKey, {
 		expiresIn: req.config.auth.token.expiresIn,

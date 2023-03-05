@@ -18,7 +18,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzgwNTUxODEsImV4cCI6MTY3ODE0MTU4MX0.G_b2aZFr_W78YtvKMQkiD8jxIBN3RdOPR1W0zR-gYYE",
 									"type": "string"
 								}
 							]
@@ -33,14 +33,15 @@
 							}
 						],
 						"url": {
-							"raw": "{{prot}}://{{server}}:{{port}}/users",
+							"raw": "{{prot}}://{{server}}:{{port}}/users/userRoute",
 							"protocol": "{{prot}}",
 							"host": [
 								"{{server}}"
 							],
 							"port": "{{port}}",
 							"path": [
-								"users"
+								"users",
+								"userRoute"
 							]
 						}
 					},
@@ -54,7 +55,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2Nzc5NzUwOTEsImV4cCI6MTY3ODA2MTQ5MX0.dK8GfS6UBZ-b1duPWzfa4FnJpqWsjDliMExYCZHoRWE",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzgwNTUxODEsImV4cCI6MTY3ODE0MTU4MX0.G_b2aZFr_W78YtvKMQkiD8jxIBN3RdOPR1W0zR-gYYE",
 									"type": "string"
 								}
 							]
@@ -62,7 +63,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{prot}}://{{server}}:{{port}}/users/100000000000000000000001",
+							"raw": "{{prot}}://{{server}}:{{port}}/users/userRoute/100000000000000000000001",
 							"protocol": "{{prot}}",
 							"host": [
 								"{{server}}"
@@ -70,6 +71,7 @@
 							"port": "{{port}}",
 							"path": [
 								"users",
+								"userRoute",
 								"100000000000000000000001"
 							]
 						}
@@ -84,7 +86,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzgwNTUxODEsImV4cCI6MTY3ODE0MTU4MX0.G_b2aZFr_W78YtvKMQkiD8jxIBN3RdOPR1W0zR-gYYE",
 									"type": "string"
 								}
 							]
@@ -92,7 +94,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{prot}}://{{server}}:{{port}}/users/findBy/PISO.PIEDRA.GALERA",
+							"raw": "{{prot}}://{{server}}:{{port}}/users/userRoute/findBy/PISO.PIEDRA.GALERA",
 							"protocol": "{{prot}}",
 							"host": [
 								"{{server}}"
@@ -100,6 +102,7 @@
 							"port": "{{port}}",
 							"path": [
 								"users",
+								"userRoute",
 								"findBy",
 								"PISO.PIEDRA.GALERA"
 							]
@@ -115,7 +118,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzgwNTUxODEsImV4cCI6MTY3ODE0MTU4MX0.G_b2aZFr_W78YtvKMQkiD8jxIBN3RdOPR1W0zR-gYYE",
 									"type": "string"
 								}
 							]
@@ -132,7 +135,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{prot}}://{{server}}:{{port}}/users/000000000000000000000001",
+							"raw": "{{prot}}://{{server}}:{{port}}/users/userRoute/000000000000000000000001",
 							"protocol": "{{prot}}",
 							"host": [
 								"{{server}}"
@@ -140,6 +143,7 @@
 							"port": "{{port}}",
 							"path": [
 								"users",
+								"userRoute",
 								"000000000000000000000001"
 							]
 						}
@@ -192,7 +196,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzgwNTUxODEsImV4cCI6MTY3ODE0MTU4MX0.G_b2aZFr_W78YtvKMQkiD8jxIBN3RdOPR1W0zR-gYYE",
 									"type": "string"
 								}
 							]
@@ -201,7 +205,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"user1\",\r\n    \"password\": \"1User1234\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -209,7 +213,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{prot}}://{{server}}:{{port}}/users/6400bc61bf24c3afbddfc005",
+							"raw": "{{prot}}://{{server}}:{{port}}/users/userRoute/6404d2ed39983f07decd33a0",
 							"protocol": "{{prot}}",
 							"host": [
 								"{{server}}"
@@ -217,7 +221,8 @@
 							"port": "{{port}}",
 							"path": [
 								"users",
-								"6400bc61bf24c3afbddfc005"
+								"userRoute",
+								"6404d2ed39983f07decd33a0"
 							]
 						}
 					},
@@ -236,7 +241,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzgwNTUxODEsImV4cCI6MTY3ODE0MTU4MX0.G_b2aZFr_W78YtvKMQkiD8jxIBN3RdOPR1W0zR-gYYE",
 									"type": "string"
 								}
 							]
@@ -244,14 +249,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{prot}}://{{server}}:{{port}}/transactions",
+							"raw": "{{prot}}://{{server}}:{{port}}/transactions/transactionRoute",
 							"protocol": "{{prot}}",
 							"host": [
 								"{{server}}"
 							],
 							"port": "{{port}}",
 							"path": [
-								"transactions"
+								"transactions",
+								"transactionRoute"
 							]
 						}
 					},
@@ -265,7 +271,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzgwNTUxODEsImV4cCI6MTY3ODE0MTU4MX0.G_b2aZFr_W78YtvKMQkiD8jxIBN3RdOPR1W0zR-gYYE",
 									"type": "string"
 								}
 							]
@@ -273,7 +279,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{prot}}://{{server}}:{{port}}/transactions/all/100000000000000000000001",
+							"raw": "{{prot}}://{{server}}:{{port}}/transactions/transactionRoute/all/100000000000000000000007",
 							"protocol": "{{prot}}",
 							"host": [
 								"{{server}}"
@@ -281,8 +287,9 @@
 							"port": "{{port}}",
 							"path": [
 								"transactions",
+								"transactionRoute",
 								"all",
-								"100000000000000000000001"
+								"100000000000000000000007"
 							]
 						}
 					},
@@ -296,7 +303,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzgwNTUxODEsImV4cCI6MTY3ODE0MTU4MX0.G_b2aZFr_W78YtvKMQkiD8jxIBN3RdOPR1W0zR-gYYE",
 									"type": "string"
 								}
 							]
@@ -304,7 +311,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{prot}}://{{server}}:{{port}}/transactions/300000000000000000000000",
+							"raw": "{{prot}}://{{server}}:{{port}}/transactions/transactionRoute/300000000000000000000000",
 							"protocol": "{{prot}}",
 							"host": [
 								"{{server}}"
@@ -312,6 +319,7 @@
 							"port": "{{port}}",
 							"path": [
 								"transactions",
+								"transactionRoute",
 								"300000000000000000000000"
 							]
 						}
@@ -326,7 +334,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzgwNTUxODEsImV4cCI6MTY3ODE0MTU4MX0.G_b2aZFr_W78YtvKMQkiD8jxIBN3RdOPR1W0zR-gYYE",
 									"type": "string"
 								}
 							]
@@ -343,14 +351,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{prot}}://{{server}}:{{port}}/transactions",
+							"raw": "{{prot}}://{{server}}:{{port}}/transactions/transactionRoute",
 							"protocol": "{{prot}}",
 							"host": [
 								"{{server}}"
 							],
 							"port": "{{port}}",
 							"path": [
-								"transactions"
+								"transactions",
+								"transactionRoute"
 							]
 						}
 					},
@@ -364,7 +373,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzgwNTUxODEsImV4cCI6MTY3ODE0MTU4MX0.G_b2aZFr_W78YtvKMQkiD8jxIBN3RdOPR1W0zR-gYYE",
 									"type": "string"
 								}
 							]
@@ -381,7 +390,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{prot}}://{{server}}:{{port}}/transactions/6400f2953fecf7d334a26f3a",
+							"raw": "{{prot}}://{{server}}:{{port}}/transactions/transactionRoute/6400f2953fecf7d334a26f3a",
 							"protocol": "{{prot}}",
 							"host": [
 								"{{server}}"
@@ -389,6 +398,7 @@
 							"port": "{{port}}",
 							"path": [
 								"transactions",
+								"transactionRoute",
 								"6400f2953fecf7d334a26f3a"
 							]
 						}
@@ -427,14 +437,14 @@
 			"response": []
 		},
 		{
-			"name": "testToken",
+			"name": "getToken",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2Nzc5NzUwOTEsImV4cCI6MTY3ODA2MTQ5MX0.dK8GfS6UBZ-b1duPWzfa4FnJpqWsjDliMExYCZHoRWE",
+							"value": "",
 							"type": "string"
 						}
 					]

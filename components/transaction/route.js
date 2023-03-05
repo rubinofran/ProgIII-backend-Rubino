@@ -3,11 +3,11 @@ const createDate = require('../../utils/create-date')
 
 const router = new Router()
 
-router.get('/', getAllTransactions) 
-router.get('/all/:id', getAllTransactionsByUserId)
+router.get('/transactionRoute/', getAllTransactions) 
+router.get('/transactionRoute/all/:id', getAllTransactionsByUserId)
 /* router.get('/:id', getTransactionById) // unused */
-router.post('/', createTransaction)
-/*router.delete('/:id', deleteTransactionById) */
+router.post('/transactionRoute/', createTransaction)
+/*router.delete('/:id', deleteTransactionById) // unused */
 
 async function getAllTransactions(req, res, next) {
     try {
@@ -21,12 +21,15 @@ async function getAllTransactions(req, res, next) {
 async function getAllTransactionsByUserId(req, res, next) {
 
     if (!req.params.id) {
+        req.logger.error('Id no encontrado. Enviando 404 al cliente')
         res.status(404).send('Id no encontrado')
       }
     console.log('getAllTransactionsByUserId con id: ', req.params.id)
 
     try {
         const transactions = await req.model('Transaction').find({userId: req.params.id}).populate('transactionType')
+        // Sin validar, peor caso: array vacío
+
         res.send(transactions)
     } catch (err) {
         next(err)
@@ -36,15 +39,15 @@ async function getAllTransactionsByUserId(req, res, next) {
 /* async function getTransactionById(req, res, next) {
 
     if (!req.params.id) {
+        req.logger.error('Id no encontrado. Enviando 404 al cliente')
         res.status(404).send('Transacción no encontrada')
     }
     console.log('getTransactionById con id: ', req.params.id)
   
     try {
         const transaction = await req.model('Transaction').findById(req.params.id).populate('transactionType')
-  
         if (!transaction) {
-            req.logger.error('Transacción no encontrada')
+            req.logger.error('Transacción no encontrada, Enviando 404 al cliente')
             res.status(404).send('Transacción no encontrada')
         }
   
@@ -57,12 +60,17 @@ async function getAllTransactionsByUserId(req, res, next) {
 async function createTransaction(req, res, next) {
     console.log('createTransaction: ', req.body)
   
+    if (!req.body.transactionType) {
+        req.logger.error('Tipo de transacción no encontrada. Enviando 404 al cliente')
+        res.status(404).send('Tipo de transacción no encontrada')
+    }
+
     const transaction = req.body
   
     try {
         const transactionType = await req.model('Type').findOne({ typeName: transaction.transactionType })
         if (!transactionType) {
-            req.logger.error('Tipo de transacción no encontrada')
+            req.logger.error('Tipo de transacción no encontrada. Enviando 404 al cliente')
             res.status(404).send('Tipo de transacción no encontrada')
         } 
 
@@ -74,7 +82,7 @@ async function createTransaction(req, res, next) {
               createdAt: createDate()
         })
   
-        // Se debe recibir además el id del destinatario para modificar su dinero
+        // Se debe recibir además el id del destinatario para modificar su dinero, a futuro
 /*         const userToUpdate = await req.model('User').findById(req.params.userId)
         if (!userToUpdate) {
           req.logger.error('Usuario no encontrado')
@@ -95,7 +103,8 @@ async function createTransaction(req, res, next) {
 /* async function deleteTransactionById(req, res, next) {
   
     if (!req.params.id) {
-      res.status(500).send('Id no encontrado')
+        req.logger.error('Id no encontrado. Enviando 404 al cliente')
+        res.status(404).send('Id no encontrado')
     }
     console.log('deleteTransactionById con id: ', req.params.id)
   
@@ -103,7 +112,7 @@ async function createTransaction(req, res, next) {
       const transaction = await req.model('Transaction').findById(req.params.id)
   
       if (!transaction) {
-        req.logger.error('Transacción no encontrada')
+        req.logger.error('Transacción no encontrada, Enviando 404 al cliente')
         res.status(404).send('Transacción no encontrada')
       }
   

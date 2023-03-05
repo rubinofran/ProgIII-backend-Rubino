@@ -31,6 +31,7 @@ async function validateUserAndCreateToken(req, res, next) {
           req.logger.verbose('Usuario o contraseña inválidos. Enviando 401 al cliente')
           res.status(401).send('Usuario o contraseña inválidos')
       }
+      
       const response = await createToken(req, user)
       res.status(201).send(response)
   } catch (err) {

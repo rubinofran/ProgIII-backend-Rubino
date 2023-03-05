@@ -39,12 +39,5 @@
       "humanReadableUnhandledException": true,
       "colorize": true
     }
-  },
-
-  "aws": {
-    "accessKeyId": "",
-    "secretAccessKey": "",
-    "bucket": "api-local",
-    "region": "us-east-1"
   }
 }
