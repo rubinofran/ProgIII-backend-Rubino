@@ -32,6 +32,7 @@
     "dotenv": "^16.0.3",
     "express": "~4.16.1",
     "figlet": "^1.5.2",
+    "http-errors": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.3.1",
     "mongoose": "^6.6.4",

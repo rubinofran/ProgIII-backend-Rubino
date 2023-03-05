@@ -1,16 +1,12 @@
 const jwt = require('jsonwebtoken')
 const createError = require('http-errors')
 
-const publicKey = require('../../lib/public-key')
-
 function getToken(req, next) {
   const TOKEN_REGEX = /^\s*Bearer\s+(\S+)/g
   const matches = TOKEN_REGEX.exec(req.headers.authorization)
-
   if (!matches) {
     return next(new createError.Unauthorized())
   }
-
   const [, token] = matches
   return token
 }
@@ -20,48 +16,42 @@ function authenticationMiddleware(req, res, next) {
     req.logger.warn('Falta encabezado de autorización')
     return next(new createError.Unauthorized())
   }
-
   const token = getToken(req, next)
-
   try {
-    req.user = jwt.verify(token, publicKey, {
-      audience: req.config.auth.token.audience,
-      algorithms: [req.config.auth.token.algorithm],
-      issuer: req.config.auth.token.issuer,
-    })
-
+    req.user = jwt.verify(token, process.env.SECRET_KEY)
+    /* console.log(req.user) */
     if (
       !req.user ||
-      !req.user._id /* ||
-      !req.user.organization ||
-      !req.user.role ||
-      !req.user.permissions */
+      !req.user._id ||
+      !req.user.role /* || true */
     ) {
       req.logger.error('Error al autenticar')
       return next(new createError.Unauthorized())
     }
 
     req.logger.verbose(`Usuario ${req.user._id} autenticado`)
+    return next()
   } catch (err) {
-    if (err.message === 'invalid algorithm' || err.message === 'invalid signature') {
+/*     if (err.message === 'invalid algorithm' || err.message === 'invalid signature') {
       const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
-      req.logger.error(`Intento de acceso sospechoso desde la ip=${ip} ${token}`)
-    }
-    if (err.name === 'TokenExpiredError') {
-      req.logger.warn('El token expiró, enviando 401 al cliente')
+      // req.logger.error(`Intento de acceso sospechoso desde la ip=${ip} ${token}`)
+    } */
+/*     if (err.name === 'TokenExpiredError') {
+      // req.logger.warn('El token expiró, enviando 401 al cliente')
       return res.sendStatus(401)
-    }
+    } */
     return next(new createError.Unauthorized(err))
   }
 }
 
 function authorizationMiddleware(req, res, next) {
-  req.hasPermission = function hasPermission(permissionId) {
-    if (!req.user/*  || !req.user.role */) {
+  
+/*   req.hasPermission = function hasPermission(permissionId) {
+    if (!req.user || !req.user.role) {
       return false
     }
 
-/*     if (req.user.role === 'admin') {
+    if (req.user.role === 'admin') {
       return true
     }
 
@@ -71,35 +61,15 @@ function authorizationMiddleware(req, res, next) {
 
     if (!req.user.permissions.find((id) => id === permissionId)) {
       return false
-    } */
+    }
 
     return true
   }
 
-/*   req.isAdmin = function isAdmin() {
+  req.isAdmin = function isAdmin() {
     return req.user && req.user.role === 'admin'
-  }
+  } */
 
-  req.isPatient = function isPatient() {
-    return req.user && req.user.role === 'patient'
-  }
-
-  req.isDoctor = function isDoctor() {
-    return req.user && req.user.role === 'doctor'
-  }
-
-  req.isManager = function isManager() {
-    return req.user && req.user.role === 'manager'
-  }
-
-  req.isAssistant = function isAssistant() {
-    return req.user && req.user.role === 'assistant'
-  }
-
-  req.isScoresManager = function isScoresManager() {
-    return req.user && req.user.role === 'scores-manager'
-  }
- */
   req.isAuthenticated = function isAuthenticated() {
     return !!req.user
   }
@@ -109,5 +79,5 @@ function authorizationMiddleware(req, res, next) {
 
 module.exports = {
   authentication: authenticationMiddleware,
-  authorization: authorizationMiddleware,
+  authorization: authorizationMiddleware
 }

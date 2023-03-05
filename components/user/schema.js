@@ -48,7 +48,7 @@ const userSchema = new Schema({
   role: { 
     type: ObjectId, 
     ref: 'Role', 
-    required: true 
+    required: true, 
   },
   createdAt: { 
     type: String,

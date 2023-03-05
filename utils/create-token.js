@@ -7,7 +7,8 @@ async function createToken(req, user) {
 		.findById(user.role)
 
 	const payload = {
-		_id: user._id
+		_id: user._id,
+		role: role.name,
 	};
 	
 	const userResponse = {
@@ -26,13 +27,13 @@ async function createToken(req, user) {
 		updatedAt: user.updatedAt, */
 	};
 
-	const privateKey = req.config.auth.token.secret
-
+	const privateKey = process.env.SECRET_KEY/* req.config.auth.token.secret */
+	
 	const token = jwt.sign(payload, privateKey, {
 		expiresIn: req.config.auth.token.expiresIn,
 	});
 
-	return { user: userResponse, token: `Bearer ${token}` };
+	return { user: userResponse, token }; /* token: `Bearer ${token}` */
 }
 
 module.exports = createToken;

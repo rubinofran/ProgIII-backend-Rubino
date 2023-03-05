@@ -1,50 +1,41 @@
 const { Router } = require('express')
 const createToken = require('../../utils/create-token')
+const bcrypt = require('bcrypt')
+
 const router = new Router()
 
-router.post('/token', crearTokenDeUsuario)
+router.post('/token', validateUserAndCreateToken)
 
-async function crearTokenDeUsuario(req, res, next) {
+async function validateUserAndCreateToken(req, res, next) {
+  console.log('validateUserAndCreateToken: ', req.body)
 
   if (!req.body.userName) {
     req.logger.verbose('Parámetro userName faltante. Enviando 400 al cliente')
-    return res.status(400).end()
+    res.status(400).send('Parámetro userName faltante')
   }
-
-  req.logger.info(`Creando token de usuario para ${req.body.userName}`)
+  
+  req.logger.info(`Intentando crear token de usuario para ${req.body.userName}`)
 
   if (!req.body.password) {
     req.logger.info('Parámetro password faltante. Enviando 400 al cliente')
-    return res.status(400).end()
+    res.status(400).send('Parámetro password faltante')
   }
 
   try {
-    
-    const usuario = await req.model('UsuarioPruebas').findOne({ userName: req.body.userName }, '+password')
+      const user = await req.model('User').findOne({ userName: req.body.userName }, '+password')
+      const passwordCorrect = user == null
+          ? false
+          : await bcrypt.compare(req.body.password, user.password)
 
-    if (!usuario) {
-      req.logger.verbose('Usuario no encontrado. Enviando 404 al cliente')
-      return res.status(401).end()
-    }
-
-    req.logger.verbose('Revisando el password de usuario')
-    const result = await usuario.checkPassword(req.body.password)
-
-    delete usuario.password
-
-    if (!result.isOk) {
-      req.logger.verbose('Password inválido. Enviando 401 al cliente')
-      return res.status(401).end()
-    }
-    
-    const response = await createToken(req, usuario)
-    res.status(201).json(response)
-  
+      if (!(user && passwordCorrect)) {
+          req.logger.verbose('Usuario o contraseña inválidos. Enviando 401 al cliente')
+          res.status(401).send('Usuario o contraseña inválidos')
+      }
+      const response = await createToken(req, user)
+      res.status(201).send(response)
   } catch (err) {
-    next(err)
+      next(err)
   }
-
 }
-
 
 module.exports = router

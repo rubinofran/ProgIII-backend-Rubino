@@ -19,5 +19,5 @@ Object.keys(components).forEach((component) => {
 
 module.exports = {
   routers,
-  schemas,
+  schemas
 }

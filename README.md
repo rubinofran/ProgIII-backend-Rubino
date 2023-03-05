@@ -15,3 +15,11 @@ npm run nomad up
 
 # How to test API
 Import ProgIII.postman_collection.json and ProgIII.postman_enviroment.json
+
+# About
+Base de datos: MONGO DB 
+Ruteo: EXPRESS 
+Backend: NODE 
+Seguridad: JWT 
+Migraciones: NOMAD 
+Variables de entorno: DOT ENV 

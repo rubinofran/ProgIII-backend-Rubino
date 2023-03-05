@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "fd09d41d-97c5-44b9-a90d-e083c5fe6c1d",
 		"name": "ProgIII",
+		"description": "Consultas para el final de la asignatura ProgramaciónIII",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "19951513"
 	},
@@ -12,8 +13,25 @@
 				{
 					"name": "getUsers",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDEiLCJyb2xlIjoidXNlciIsImlhdCI6MTY3Nzk1OTA2MywiZXhwIjoxNjc4MDQ1NDYzfQ.YzsLp5JW70jD-QFx7JwxvYZQWn_nk7az08PRSFcUVU4",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"url": {
 							"raw": "{{prot}}://{{server}}:{{port}}/users",
 							"protocol": "{{prot}}",
@@ -31,10 +49,20 @@
 				{
 					"name": "getUserById",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2Nzc5NzUwOTEsImV4cCI6MTY3ODA2MTQ5MX0.dK8GfS6UBZ-b1duPWzfa4FnJpqWsjDliMExYCZHoRWE",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{prot}}://{{server}}:{{port}}/users/000000000000000000000001",
+							"raw": "{{prot}}://{{server}}:{{port}}/users/100000000000000000000001",
 							"protocol": "{{prot}}",
 							"host": [
 								"{{server}}"
@@ -42,7 +70,7 @@
 							"port": "{{port}}",
 							"path": [
 								"users",
-								"000000000000000000000001"
+								"100000000000000000000001"
 							]
 						}
 					},
@@ -51,6 +79,16 @@
 				{
 					"name": "getUserByAlias",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -72,11 +110,21 @@
 				{
 					"name": "updateUserById",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"isActive\": true   \r\n}",
+							"raw": "{\r\n    \"isActive\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -101,11 +149,21 @@
 				{
 					"name": "postUser",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"user4@banco.com\",\r\n    \"password\": \"4User1234\",\r\n    \"clientType\": \"Persona física\",\r\n    \"name\": \"Homero Simpson\",\r\n    \"address\": \"Calle Falsa 123\",\r\n    \"accountType\": \"Cuenta corriente\",\r\n    \"role\": \"user\",\r\n    \"createdAt\": \"01/02/2023 Hora: 20:00\",\r\n    \"updatedAt\": \"01/02/2023 Hora: 20:00\"\r\n}",
+							"raw": "{\r\n    \"userName\": \"user4@banco.com\",\r\n    \"password\": \"4User1234\",\r\n    \"clientType\": \"Persona física\",\r\n    \"name\": \"Homero Simpson\",\r\n    \"address\": \"Calle Falsa 123\",\r\n    \"accountType\": \"Cuenta corriente\",\r\n    \"role\": \"user\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -129,6 +187,16 @@
 				{
 					"name": "delteUserById",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -141,7 +209,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{prot}}://{{server}}:{{port}}/users/63fff9b6b34c7a20a25263da",
+							"raw": "{{prot}}://{{server}}:{{port}}/users/6400bc61bf24c3afbddfc005",
 							"protocol": "{{prot}}",
 							"host": [
 								"{{server}}"
@@ -149,7 +217,179 @@
 							"port": "{{port}}",
 							"path": [
 								"users",
-								"63fff9b6b34c7a20a25263da"
+								"6400bc61bf24c3afbddfc005"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "getTransactions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{prot}}://{{server}}:{{port}}/transactions",
+							"protocol": "{{prot}}",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTransactionsByUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{prot}}://{{server}}:{{port}}/transactions/all/100000000000000000000001",
+							"protocol": "{{prot}}",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"transactions",
+								"all",
+								"100000000000000000000001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTransactionById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{prot}}://{{server}}:{{port}}/transactions/300000000000000000000000",
+							"protocol": "{{prot}}",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"transactions",
+								"300000000000000000000000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postTransaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"transactionType\": \"transfer\",\r\n    \"userId\": \"100000000000000000000001\",\r\n    \"amount\": 2000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prot}}://{{server}}:{{port}}/transactions",
+							"protocol": "{{prot}}",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delteTransactionById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"user1\",\r\n    \"password\": \"1User1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prot}}://{{server}}:{{port}}/transactions/6400f2953fecf7d334a26f3a",
+							"protocol": "{{prot}}",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"transactions",
+								"6400f2953fecf7d334a26f3a"
 							]
 						}
 					},
@@ -160,6 +400,16 @@
 		{
 			"name": "getStatus",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -179,11 +429,28 @@
 		{
 			"name": "testToken",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2Nzc5NzUwOTEsImV4cCI6MTY3ODA2MTQ5MX0.dK8GfS6UBZ-b1duPWzfa4FnJpqWsjDliMExYCZHoRWE",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"userName\": \"user2@banco.com\",\r\n    \"password\": \"2User1234\"\r\n}",
+					"raw": "{\r\n    \"userName\": \"admin1@banco.com\",\r\n    \"password\": \"1Admin1234\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -191,15 +458,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{prot}}://{{server}}:{{port}}/users/login",
+					"raw": "{{prot}}://{{server}}:{{port}}/auth/token",
 					"protocol": "{{prot}}",
 					"host": [
 						"{{server}}"
 					],
 					"port": "{{port}}",
 					"path": [
-						"users",
-						"login"
+						"auth",
+						"token"
 					]
 				}
 			},

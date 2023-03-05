@@ -3,11 +3,12 @@ const bcrypt = require('bcrypt')
 const createToken = require('../../utils/create-token')
 const createDate = require('../../utils/create-date')
 const createAlias = require('../../utils/create-alias')
+const { authentication/* , authorization */ } = require('../auth/middleware')
 
 const router = new Router()
 
 router.get('/', getAllUsers)
-router.get('/:id', getUserById)
+router.get('/:id', authentication, getUserById)
 router.get('/findBy/:alias', getUserByAlias)
 router.post('/', createUser)
 router.delete('/:id', deleteUserById)
@@ -16,7 +17,7 @@ router.post('/login', validateUserAndCreateToken)
 
 async function getAllUsers(req, res, next) {
   try {
-    const users = await req.model('User').find(/* { isActive: true } */).populate('role')
+    const users = await req.model('User').find().populate('role')
     res.send(users)
   } catch (err) {
     next(err)
@@ -90,10 +91,12 @@ async function createUser(req, res, next) {
         role: role._id, 
         alias: createAlias(users.filter(u => u.alias != undefined)), 
         isActive: true, 
-        moneyInAccount: 0 
+        moneyInAccount: 0,
+        createdAt: createDate(),
+        updatedAt: createDate()
       })
 
-    res.send(`Usuario creado:  ${userCreated.userName}`)
+    res.send(userCreated) // `Usuario creado:  ${userCreated}`
   } catch (err) {
     next(err)
   }
@@ -139,9 +142,7 @@ async function updateUserById(req, res, next) {
       res.status(404).send('Usuario no encontrado')
     }
 
-    /* console.log(Object.keys(user).length) */
-    if(Object.keys(user).length == 1) { // Alta, baja y modificación del dinero en la cuenta
-      /* console.log(Object.keys(user)[0]) */
+    if(Object.keys(user).length == 1) { 
       const schemaField = Object.keys(user)[0]
       userToUpdate[schemaField] = user[schemaField]
     }
@@ -157,26 +158,31 @@ async function updateUserById(req, res, next) {
 
 async function validateUserAndCreateToken(req, res, next) {
   console.log('validateUserAndCreateToken: ', req.body)
+
+  if (!req.body.userName) {
+    req.logger.verbose('Parámetro userName faltante. Enviando 400 al cliente')
+    res.status(400).send('Parámetro userName faltante')
+  }
+  
+  req.logger.info(`Intentando crear token de usuario para ${req.body.userName}`)
+
+  if (!req.body.password) {
+    req.logger.info('Parámetro password faltante. Enviando 400 al cliente')
+    res.status(400).send('Parámetro password faltante')
+  }
+
   try {
       const user = await req.model('User').findOne({ userName: req.body.userName })
-
       const passwordCorrect = user == null
           ? false
           : await bcrypt.compare(req.body.password, user.password)
-      
-      if (!(user && passwordCorrect)) {
-          req.logger.verbose('Password o usuario inválidos. Enviando 401 al cliente')
-          res.status(401).json({
-              error: 'Password o usuario inválidos'
-          })
-          return res.status(401).end()
-      }
-      // Seguridad
-      delete user.password
 
+      if (!(user && passwordCorrect)) {
+          req.logger.verbose('Usuario o contraseña inválidos. Enviando 401 al cliente')
+          res.status(401).send('Usuario o contraseña inválidos')
+      }
       const response = await createToken(req, user)
       res.status(201).send(response)
-
   } catch (err) {
       next(err)
   }

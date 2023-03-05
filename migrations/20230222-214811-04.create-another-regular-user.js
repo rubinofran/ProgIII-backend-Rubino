@@ -9,11 +9,11 @@ exports.isIgnored    = false;
 exports.up = (db, done) => {
 
   const date = new Date() 
-  const migrationDate = `${date.getDate() > 9 ? '' : '0'}${date.getDate()}/${date.getDate() > 8 ? '' : '0'}${date.getMonth() + 1}/${date.getFullYear()} Hora: ${date.getHours()}:${date.getMinutes() > 9 ? '' : '0'}${date.getMinutes()}`
+  const migrationDate = `${date.getDate() > 9 ? '' : '0'}${date.getDate()}/${date.getMonth() > 8 ? '' : '0'}${date.getMonth() + 1}/${date.getFullYear()} Hora: ${date.getHours() > 9 ? '' : '0'}${date.getHours()}:${date.getMinutes() > 9 ? '' : '0'}${date.getMinutes()}`
 
   db.collection('users').insertOne(
     {
-      _id: new ObjectId('000000000000000000000002'),
+      _id: new ObjectId('100000000000000000000002'),
       userName: 'user2@banco.com',
       password: '$2b$10$zOGpIALV5SkUez7NQ3cGUuQEg0zONnE2haDtSuyQ2X93P.bDOxmuu', // 2User1234
       clientType: 'Persona física',
@@ -35,7 +35,7 @@ exports.up = (db, done) => {
 exports.down = (db, done) => {
   db.collection('users').deleteOne(
     {
-      _id: new ObjectId('000000000000000000000002'),
+      _id: new ObjectId('100000000000000000000002'),
     },
     done,
   )
