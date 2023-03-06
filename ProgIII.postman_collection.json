@@ -127,7 +127,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"isActive\": false\r\n}",
+							"raw": "{\r\n    \"name\": \"Homero Thomson\",\r\n    \"address\": \"Lago del terror\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -135,7 +135,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{prot}}://{{server}}:{{port}}/users/userRoute/000000000000000000000001",
+							"raw": "{{prot}}://{{server}}:{{port}}/users/userRoute/6405cac759224c35f2fe713e",
 							"protocol": "{{prot}}",
 							"host": [
 								"{{server}}"
@@ -144,7 +144,7 @@
 							"path": [
 								"users",
 								"userRoute",
-								"000000000000000000000001"
+								"6405cac759224c35f2fe713e"
 							]
 						}
 					},
@@ -196,7 +196,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzgwNTUxODEsImV4cCI6MTY3ODE0MTU4MX0.G_b2aZFr_W78YtvKMQkiD8jxIBN3RdOPR1W0zR-gYYE",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDEiLCJyb2xlIjoidXNlciIsImlhdCI6MTY3ODEwMDU2NSwiZXhwIjoxNjc4MTg2OTY1fQ.6J9F85E1D2FCmgl3JjtVOSv4t4NDkDLhhID6UJ24QkQ",
 									"type": "string"
 								}
 							]
@@ -213,7 +213,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{prot}}://{{server}}:{{port}}/users/userRoute/6404d2ed39983f07decd33a0",
+							"raw": "{{prot}}://{{server}}:{{port}}/users/userRoute/6405c7c4044d8c1ed15260ee",
 							"protocol": "{{prot}}",
 							"host": [
 								"{{server}}"
@@ -222,7 +222,7 @@
 							"path": [
 								"users",
 								"userRoute",
-								"6404d2ed39983f07decd33a0"
+								"6405c7c4044d8c1ed15260ee"
 							]
 						}
 					},
@@ -460,7 +460,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"userName\": \"admin1@banco.com\",\r\n    \"password\": \"1Admin1234\"\r\n}",
+					"raw": "{\r\n    \"userName\": \"user1@banco.com\",\r\n    \"password\": \"1User1234\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

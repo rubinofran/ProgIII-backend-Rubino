@@ -1,4 +1,4 @@
-/* 12! = 479001600 combinaciones posibles */
+/* 1320 combinaciones posibles (grupo de 12, ordenados de a 3 teniendo en cuenta el orden) */
 const aliasWordList = [  
     'PISO', 'PIEDRA', 'GALERA', 'SOMBRERO', 'AMARILLO', 'TECLADO',
     'TECHO', 'LADRILLO', 'PINTURA', 'CASA', 'VERDE', 'MONITOR'

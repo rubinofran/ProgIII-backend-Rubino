@@ -160,6 +160,9 @@ async function updateUserById(req, res, next) {
     if(Object.keys(user).length == 1) { 
       const schemaField = Object.keys(user)[0]
       userToUpdate[schemaField] = user[schemaField]
+    } else { // More than one field
+      userToUpdate.name = user.name
+      userToUpdate.address = user.address  
     }
 		
     userToUpdate.updatedAt = createDate()
